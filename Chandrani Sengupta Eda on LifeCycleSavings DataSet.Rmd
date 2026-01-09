@@ -1,0 +1,79 @@
+---
+title: "EDA on the LifeCycleSavings"
+author: "Chandrani Sengupta"
+date: "2026-01-09"
+output: word_document
+---
+
+For starting EDA let us take a dataset first say LifeCycleSavings . So we load it from the datasets package in R 
+```{r}
+LifeCycleSavings
+head(LifeCycleSavings)
+```
+**Understanding the data**
+Let us first Understand the Data First. This is the first step of Data Analysis
+Let us check for the number of rows and columns in the data 
+```{r}
+dim(LifeCycleSavings)
+```
+The Dataset has 50 observations that is the number of rows and 5 Variables/Features sr ,pop15,pop75,dpi,ddpi
+
+The variables are sr:numeric aggregrate personal savings 
+                  pop15: numeric % population under 15
+                  pop75:numeric % population under 75
+                  dpi: numeric real per-capita disposable income 
+                  ddpi:numeric % growth rate of dpi
+                  
+We see that under the life-cycle savings hypothesis as developed by Franco Modigliani, the savings ratio (aggregate personal saving divided by disposable income) is explained by per-capita disposable income, the percentage rate of change in per-capita disposable income, and two demographic variables: the percentage of population less than 15 years old and the percentage of the population over 75 years old. The data are averaged over the decade 1960–1970 to remove the business cycle or other short-term fluctuations.
+
+Source of DataSet:The data were obtained from Belsley, Kuh and Welsch (1980). They in turn obtained the data from Sterling (1977).
+We see that all the variables are numeric continuous variables.Let us use the summary statistics . The summary statistics gives information on the numeric variables.
+```{r}
+summary(LifeCycleSavings)
+```
+We see that Mean of sr is almost equal to Median . Hence the distribution is symmetric.In case of pop15 and pop75 Mean and Median are same and hence the distributions of the individual variables are symmetric.
+
+In case of dpi and ddpi , Mean>Median and hence the distributions of the individual variables are positively skewed .
+Now Let us convert the following into a table 
+```{r}
+x=LifeCycleSavings
+x
+Variable_name=c('sr','pop15','pop75','dpi','ddpi')
+What_does_it_represent=c('savings_ratio','percentage of population less than 15','percentage of population  less than 75','per capita disposable income','percentage change in per capita disposable income ')
+Type=c('Quantitative','Quantitative','Quantitative','Quantitative','Quantitative')
+Nature=c('Continuous','Continuous','Continuous','Continuous','Continuous')
+Minimum=c(min(x$sr),min(x$pop15),min(x$pop75),min(x$dpi),min(x$ddpi))
+Maximum=c(max(x$sr),max(x$pop15),max(x$pop75),max(x$dpi),max(x$ddpi))
+Range_of_variation=c(max(x$sr)-min(x$sr),max(x$pop15)-min(x$pop15),max(x$pop75)-min(x$pop75),max(x$dpi)-min(x$dpi),max(x$ddpi)-min(x$ddpi))
+Mean_of_each_variable=c(mean(x$sr),mean(x$pop15),mean(x$pop75),mean(x$dpi),mean(x$ddpi))
+Median=c(median(x$sr),median(x$pop15),median(x$pop75),median(x$dpi),median(x$ddpi))
+Variance=c(var(x$sr),var(x$pop15),var(x$pop75),var(x$dpi),var(x$ddpi))
+Standard_deviation=c(sd(x$sr),sd(x$pop15),sd(x$pop75),sd(x$dpi),sd(x$ddpi))
+LifeCycleSavings1=data.frame(Variable_name,What_does_it_represent,Type,Nature,Minimum,Maximum,Range_of_variation,Mean_of_each_variable,Median,Variance,Standard_deviation)                    
+LifeCycleSavings1
+```
+
+From the table we see that Mean of sr is almost equal to Median . Hence the distribution is symmetric.In case of pop15 and pop75 Mean and Median are same and hence the distributions of the individual variables are symmetric.
+
+In case of dpi and ddpi , Mean>Median and hence the distributions of the individual variables are positively skewed .
+And there is a higher range of variation in the dpi values 
+
+**Visualisation of the data**
+Since there are no catgorical variables let us use pairplot to visualise the data 
+```{r}
+pairs(LifeCycleSavings)
+```
+For sr vs pop15 , All the values are scattered and far from one another 
+
+For sr vs pop75 ,  All the values are scattered and far from one onther 
+
+For pop75 vs dpi , some are clustered and some are far from each other 
+
+For pop15 vs pop75 , There is a weak negative linear relationship between them. This indicates with a unit increment in pop75 , pop15 decreases and some of the points are clustered 
+
+For pop15 vs dpi , There is a weak negative curvilinear relationship between them. This indicates with a unit increment in dpi, pop15 decreases 
+
+For pop75 vs dpi , There is a weak positive linear relationship between them. This indicates with unit increment in dpi,pop75 increases
+
+**Overall Conclusion**
+We see that pop 75 increases as dpi increases and pop 15 decreases as pop75 decreases where pop15:Percentage of population less than 15 years old and pop75: percentage of population less than 75 years old and dpi:capita per income 
